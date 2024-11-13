@@ -44,7 +44,12 @@ export default {
     },
     selectFirstResult: {
       type: Boolean
-    }
+    },
+    enableDragging: {
+      type: Boolean,
+      default: false
+    },
+    
   },
   watch: {
     location: {
@@ -136,7 +141,7 @@ export default {
     },
     load() {
       const instance = this
-      const { map, BMap, location, policy, selectFirstResult, autoViewport, highlightMode, search, start, end, startCity, endCity, waypoints, originInstance, getWaypoints } = this
+      const { map, BMap, location, policy, selectFirstResult, autoViewport, enableDragging, highlightMode, search, start, end, startCity, endCity, waypoints, originInstance, getWaypoints } = this
       const _location = location ? isPoint(location) ? createPoint(BMap, location) : location : map
       const route = this.originInstance = new BMap.DrivingRoute(_location, {
         renderOptions: {
@@ -145,7 +150,8 @@ export default {
           panel: this.$el,
           selectFirstResult,
           autoViewport,
-          highlightMode
+          highlightMode,
+          enableDragging //支持可拖拽
         },
         policy: window[policy],
         onSearchComplete(e) {
