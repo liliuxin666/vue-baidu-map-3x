@@ -42,6 +42,10 @@ export default {
     autoViewport: {
       type: Boolean
     },
+    enableDragging: {
+      type: Boolean,
+      default: false
+    },
     selectFirstResult: {
       type: Boolean
     }
@@ -56,6 +60,7 @@ export default {
     },
     start: {
       handler(val) {
+        console.log('路线规划起点:',val);
         const { originInstance, end, startCity, endCity, waypoints, BMap, getWaypoints } = this
         originInstance.search(getPosition(BMap, val), getPosition(BMap, end), {
           startCity,
@@ -112,6 +117,9 @@ export default {
     autoViewport() {
       this.reload()
     },
+    enableDragging() {
+      this.reload()
+    },
     selectFirstResult() {
       this.reload()
     },
@@ -136,7 +144,7 @@ export default {
     },
     load() {
       const instance = this
-      const { map, BMap, location, policy, selectFirstResult, autoViewport, highlightMode, search, start, end, startCity, endCity, waypoints, originInstance, getWaypoints } = this
+      const { map, BMap, location, policy, selectFirstResult, autoViewport, enableDragging, highlightMode, search, start, end, startCity, endCity, waypoints, originInstance, getWaypoints } = this
       const _location = location ? isPoint(location) ? createPoint(BMap, location) : location : map
       const route = this.originInstance = new BMap.DrivingRoute(_location, {
         renderOptions: {
@@ -145,6 +153,7 @@ export default {
           panel: this.$el,
           selectFirstResult,
           autoViewport,
+          enableDragging,
           highlightMode
         },
         policy: window[policy],
