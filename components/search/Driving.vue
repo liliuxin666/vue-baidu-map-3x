@@ -48,7 +48,12 @@ export default {
     },
     selectFirstResult: {
       type: Boolean
-    }
+    },
+    enableDragging: {
+      type: Boolean,
+      default: false
+    },
+    
   },
   watch: {
     location: {
@@ -153,8 +158,8 @@ export default {
           panel: this.$el,
           selectFirstResult,
           autoViewport,
-          enableDragging,
-          highlightMode
+          highlightMode,
+          enableDragging //支持可拖拽
         },
         policy: window[policy],
         onSearchComplete(e) {
